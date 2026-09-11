@@ -17,15 +17,16 @@
 
   <style>
     :root {
-      --dos-bg: #0000A8;
-      --dos-text: #FFFFFF;
-      --dos-cyan: #00AAAA;
-      --dos-gray: #AAAAAA;
-      --dos-dark-gray: #555555;
-      --dos-yellow: #FFFF55;
-      --dos-black: #000000;
-      --dos-green: #55FF55;
-      --dos-red: #FF5555;
+      --dos-bg: #5ce0d8;         /* Background Utama (Cyan/Teal Retro) */
+      --dos-text: #050a0e;       /* Teks Gelap agar Kontras di Atas Cyan */
+      --dos-cyan: #050a0e;       /* Bar Atas & Bawah (Obsidian Dark) */
+      --dos-gray: #0d1b2a;       /* Deep Navy Dark */
+      --dos-dark-gray: #1b263b;  /* Dark Blue-Gray */
+      --dos-yellow: #ffd166;     /* Retro Gold/Yellow */
+      --dos-black: #050a0e;      /* Ultra Dark Obsidian */
+      --dos-green: #06d6a0;      /* Vapor Wave Green */
+      --dos-red: #ff70a6;        /* Retro Coral Pink/Red */
+      --dos-white: #ffffff;      /* Teks Putih untuk Bar Gelap */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -48,7 +49,7 @@
       display: block;
       position: fixed;
       top: 0; left: 0; bottom: 0; right: 0;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
       background-size: 100% 4px;
       z-index: 1;
       pointer-events: none !important;
@@ -56,14 +57,15 @@
     }
 
     .npdf-menubar {
-      background: var(--dos-gray);
-      color: var(--dos-black);
+      background: var(--dos-black);
+      color: var(--dos-white);
       display: flex;
       padding: 2px 8px;
       gap: 16px;
       font-weight: bold;
       position: relative;
       z-index: 5000;
+      border-bottom: 2px solid var(--dos-yellow);
     }
 
     .npdf-menu-wrapper {
@@ -73,12 +75,13 @@
     .npdf-menu-item {
       padding: 0 8px;
       cursor: pointer;
+      color: var(--dos-white);
       transition: background-color 0.15s ease, color 0.15s ease;
     }
 
     .npdf-menu-item:hover, .npdf-menu-wrapper.open .npdf-menu-item {
-      background: var(--dos-black);
-      color: var(--dos-text);
+      background: var(--dos-yellow);
+      color: var(--dos-black);
     }
 
     .npdf-menu-item span.hotkey {
@@ -86,7 +89,7 @@
     }
 
     .npdf-menu-wrapper.open .npdf-menu-item span.hotkey {
-      color: var(--dos-yellow);
+      color: var(--dos-black);
     }
 
     .npdf-dropdown {
@@ -94,10 +97,10 @@
       top: 100%;
       left: 0;
       min-width: 250px;
-      background: var(--dos-gray);
-      color: var(--dos-black);
-      border: 2px solid var(--dos-black);
-      box-shadow: 6px 6px 0px var(--dos-black);
+      background: var(--dos-black);
+      color: var(--dos-white);
+      border: 2px solid var(--dos-yellow);
+      box-shadow: 6px 6px 0px rgba(0,0,0,0.4);
       display: none;
       flex-direction: column;
       z-index: 6000;
@@ -118,8 +121,8 @@
     }
 
     .npdf-subitem:hover {
-      background: var(--dos-black);
-      color: var(--dos-yellow);
+      background: var(--dos-yellow);
+      color: var(--dos-black);
     }
 
     .npdf-divider {
@@ -143,17 +146,17 @@
       width: 100%;
       max-width: 920px;
       background: var(--dos-bg);
-      border: 3px double var(--dos-text);
-      box-shadow: 12px 12px 0px var(--dos-black);
+      border: 3px double var(--dos-black);
+      box-shadow: 12px 12px 0px rgba(0,0,0,0.3);
       position: relative;
     }
 
     .npdf-title-bar {
-      background: var(--dos-text);
-      color: var(--dos-bg);
+      background: var(--dos-black);
+      color: var(--dos-yellow);
       text-align: center;
       font-weight: bold;
-      padding: 2px 0;
+      padding: 4px 0;
       letter-spacing: 2px;
       text-transform: uppercase;
     }
@@ -169,17 +172,17 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      background: var(--dos-cyan);
+      background: var(--dos-black);
       padding: 6px;
-      border: 1px solid var(--dos-text);
+      border: 2px solid var(--dos-black);
       max-height: 220px;
       overflow-y: auto;
     }
 
     .npdf-nav-btn {
-      background: var(--dos-bg);
-      color: var(--dos-text);
-      border: 1px solid var(--dos-text);
+      background: var(--dos-gray);
+      color: var(--dos-white);
+      border: 1px solid var(--dos-bg);
       padding: 6px 8px;
       font-family: 'VT323', monospace;
       font-size: 17px;
@@ -218,16 +221,16 @@
     }
 
     .npdf-header-card {
-      border: 1px dashed var(--dos-cyan);
+      border: 2px dashed var(--dos-black);
       padding: 10px;
-      background: rgba(0, 170, 170, 0.15);
+      background: rgba(5, 10, 14, 0.08);
     }
 
-    .npdf-header-card h2 { color: var(--dos-yellow); font-size: 22px; }
-    .npdf-header-card p { color: var(--dos-text); font-size: 18px; }
+    .npdf-header-card h2 { color: var(--dos-black); font-size: 22px; }
+    .npdf-header-card p { color: var(--dos-black); font-size: 18px; }
 
     .npdf-upload-box {
-      border: 2px dashed var(--dos-text);
+      border: 2px dashed var(--dos-black);
       padding: 26px;
       text-align: center;
       background: var(--dos-bg);
@@ -237,17 +240,18 @@
     }
 
     .npdf-upload-box:hover, .npdf-upload-box.dragover {
-      background: var(--dos-cyan);
-      color: var(--dos-black);
+      background: var(--dos-black);
+      color: var(--dos-yellow);
     }
 
     .npdf-upload-box:hover .upload-txt, .npdf-upload-box.dragover .upload-txt {
-      color: var(--dos-black);
+      color: var(--dos-yellow);
     }
 
     .upload-txt {
-      color: var(--dos-yellow);
+      color: var(--dos-black);
       font-size: 22px;
+      font-weight: bold;
       pointer-events: none;
     }
 
@@ -256,7 +260,7 @@
       height: 180px;
       background: var(--dos-black);
       color: var(--dos-green);
-      border: 2px solid var(--dos-text);
+      border: 2px solid var(--dos-black);
       padding: 10px;
       font-family: 'VT323', monospace;
       font-size: 20px;
@@ -269,7 +273,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
-      border-top: 1px solid var(--dos-cyan);
+      border-top: 2px solid var(--dos-black);
       padding-top: 12px;
     }
 
@@ -281,12 +285,12 @@
       transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
-    .npdf-field-group label { color: var(--dos-yellow); }
+    .npdf-field-group label { color: var(--dos-black); font-weight: bold; }
 
     .npdf-text-field {
       background: var(--dos-black);
-      color: var(--dos-text);
-      border: 1px solid var(--dos-text);
+      color: var(--dos-white);
+      border: 1px solid var(--dos-black);
       padding: 6px 8px;
       font-family: 'VT323', monospace;
       font-size: 18px;
@@ -295,7 +299,7 @@
 
     .npdf-text-field:focus {
       border-color: var(--dos-yellow);
-      background: #111111;
+      background: #09131d;
     }
 
     .npdf-select-custom {
@@ -305,8 +309,8 @@
 
     .npdf-select-head {
       background: var(--dos-black);
-      color: var(--dos-text);
-      border: 1px solid var(--dos-text);
+      color: var(--dos-white);
+      border: 1px solid var(--dos-black);
       padding: 6px 12px;
       font-family: 'VT323', monospace;
       font-size: 19px;
@@ -328,7 +332,7 @@
       width: 100%;
       background: var(--dos-black);
       border: 2px solid var(--dos-yellow);
-      box-shadow: 6px 6px 0px var(--dos-black);
+      box-shadow: 6px 6px 0px rgba(0,0,0,0.4);
       z-index: 9999;
       display: none;
       flex-direction: column;
@@ -356,10 +360,10 @@
 
     .npdf-select-opt {
       padding: 6px 12px;
-      color: var(--dos-text);
+      color: var(--dos-white);
       font-size: 18px;
       cursor: pointer;
-      border-bottom: 1px dashed #222;
+      border-bottom: 1px dashed #1b263b;
     }
 
     .npdf-select-opt:last-child { border-bottom: none; }
@@ -372,7 +376,7 @@
 
     .npdf-files-wrapper {
       background: var(--dos-black);
-      border: 1px solid var(--dos-text);
+      border: 1px solid var(--dos-black);
       padding: 10px;
       max-height: 160px;
       overflow-y: auto;
@@ -386,9 +390,9 @@
       justify-content: space-between;
       align-items: center;
       padding: 4px 8px;
-      background: #111144;
-      border: 1px solid var(--dos-cyan);
-      color: var(--dos-text);
+      background: var(--dos-dark-gray);
+      border: 1px solid var(--dos-bg);
+      color: var(--dos-white);
     }
 
     .npdf-file-row .del-btn {
@@ -405,9 +409,9 @@
     }
 
     .npdf-btn-action {
-      background: var(--dos-gray);
-      color: var(--dos-black);
-      border: 2px solid var(--dos-text);
+      background: var(--dos-black);
+      color: var(--dos-yellow);
+      border: 2px solid var(--dos-black);
       padding: 6px 16px;
       font-family: 'VT323', monospace;
       font-size: 20px;
@@ -428,20 +432,21 @@
     }
 
     .npdf-bottom-bar {
-      background: var(--dos-cyan);
-      color: var(--dos-black);
+      background: var(--dos-black);
+      color: var(--dos-green);
       display: flex;
       justify-content: space-between;
-      padding: 2px 12px;
+      padding: 4px 12px;
       font-weight: bold;
       position: relative;
       z-index: 10;
+      border-top: 2px solid var(--dos-yellow);
     }
 
     .npdf-modal-mask {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.85);
+      background: rgba(5, 10, 14, 0.85);
       display: none;
       align-items: center;
       justify-content: center;
@@ -457,8 +462,8 @@
 
     .npdf-modal-content {
       background: var(--dos-bg);
-      border: 3px double var(--dos-text);
-      box-shadow: 10px 10px 0px var(--dos-black);
+      border: 3px double var(--dos-black);
+      box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
       padding: 16px;
       width: 90%;
       max-width: 680px;
@@ -470,7 +475,7 @@
 
     .npdf-modal-view {
       background: var(--dos-black);
-      border: 1px solid var(--dos-text);
+      border: 1px solid var(--dos-black);
       padding: 10px;
       overflow-y: auto;
       display: flex;
@@ -582,7 +587,7 @@
           <div class="npdf-upload-box" id="dropzone">
             <input type="file" id="file-input" style="display:none;" multiple>
             <div class="upload-txt">[ TEKAN SELEKSI ATAU SERET BERKAS KE SINI ]</div>
-            <div style="font-size:16px; color:var(--dos-gray); margin-top:4px;" id="dropzone-sub">Mendukung format gambar & PDF standar</div>
+            <div style="font-size:16px; color:var(--dos-black); margin-top:4px;" id="dropzone-sub">Mendukung format gambar & PDF standar</div>
           </div>
 
           <textarea id="text-editor" class="npdf-editor-input" placeholder="Ketik isi teks/kode HTML di sini..."></textarea>
@@ -693,7 +698,7 @@
           </div>
 
           <div id="file-list-container" style="display:none;">
-            <div style="color:var(--dos-yellow); font-size:18px; margin-bottom:4px;">BERKAS TERPILIH:</div>
+            <div style="color:var(--dos-black); font-weight:bold; font-size:18px; margin-bottom:4px;">BERKAS TERPILIH:</div>
             <div id="file-list" class="npdf-files-wrapper"></div>
           </div>
         </div>
@@ -726,6 +731,41 @@
   </div>
 
   <script>
+    // Web Audio API - Sound Generator Suara Click Retro 8-bit
+    let audioCtx = null;
+
+    function playRetroClickSound() {
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(250, audioCtx.currentTime + 0.025);
+
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.025);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.025);
+      } catch (e) {
+        console.error("Audio Web API error:", e);
+      }
+    }
+
+    // Listener global di window untuk memastikan SETIAP sentuhan / klik pada web membunyikan suara
+    window.addEventListener('pointerdown', () => playRetroClickSound(), { capture: true });
+
     document.addEventListener('DOMContentLoaded', () => {
       if (window.pdfjsLib) {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
@@ -932,7 +972,7 @@
         const modal = document.getElementById('preview-modal');
         document.getElementById('modal-title').innerText = '=== PANDUAN PENGGUNAAN ===';
         document.getElementById('modal-body').innerHTML = `
-          <div style="color:var(--dos-text); font-size:18px; line-height:1.4;">
+          <div style="color:var(--dos-white); font-size:18px; line-height:1.4;">
             <p style="color:var(--dos-yellow);">1. PILIH MODUL</p>
             <p>Klik tombol modul di atas atau gunakan menu Tools.</p><br>
             <p style="color:var(--dos-yellow);">2. UNGGAH / KETIK</p>
@@ -949,7 +989,7 @@
         const modal = document.getElementById('preview-modal');
         document.getElementById('modal-title').innerText = '=== TENTANG N PDF ===';
         document.getElementById('modal-body').innerHTML = `
-          <div style="color:var(--dos-cyan); font-size:19px; line-height:1.5; text-align:center;">
+          <div style="color:var(--dos-green); font-size:19px; line-height:1.5; text-align:center;">
             <p style="color:var(--dos-yellow); font-size:22px;">N PDF STUDIO v1.0</p>
             <p>All-in-One Web-based PDF Utility Toolkit</p>
             <p>© N PDF Workspace. All Rights Reserved.</p>
@@ -1400,7 +1440,6 @@
         html2pdf().set(opt).from(content).save();
       }
 
-      // Perbaikan Rendering Teks Terjemahan ke Canvas Gambar agar Mandarin, Jepang, Arab tidak simbol-simbol
       async function translatePdfPrecise() {
         const file = loadedFiles[0];
         const targetLang = selectedTargetLang;
@@ -1435,7 +1474,6 @@
               console.error("Gagal menerjemahkan teks:", e);
             }
 
-            // Render teks ke elemen Canvas HTML terlebih dahulu agar font non-latin (Mandarin/Jepang/Arab) terbaca sempurna
             const canvasTemp = document.createElement('canvas');
             const ctxTemp = canvasTemp.getContext('2d');
             ctxTemp.font = `${fontSize * 1.5}px sans-serif`;
