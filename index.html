@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N PDF Studio (1984) - Enterprise Edition</title>
+
+  <!-- PWA Manifest Integration -->
+  <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIk4gUERGIFN0dWRpbyIsCiAgInNob3J0X25hbWUiIjogIk5QREYiLAogICJzdGFydF91cmwiOiAiLi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiM1Y2UwZDgiLAogICJ0aGVtZV9jb2xvciI6ICIjMDUwYTBlIgp9">
+
+  <!-- Core Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="npdf-menubar">
+    <div class="npdf-menu-wrapper" id="menu-file">
+      <div class="npdf-menu-item"><span class="hotkey">F</span>ile</div>
+      <div class="npdf-dropdown">
+        <div class="npdf-subitem" id="sub-buka"><span>Buka Berkas...</span> <span>Ctrl+O</span></div>
+        <div class="npdf-subitem" id="sub-reset"><span>Reset Berkas</span> <span>Ctrl+R</span></div>
+        <div class="npdf-divider"></div>
+        <div class="npdf-subitem" id="sub-eksekusi"><span>Eksekusi Proses</span> <span>Enter</span></div>
+      </div>
+    </div>
+
+    <div class="npdf-menu-wrapper" id="menu-edit">
+      <div class="npdf-menu-item"><span class="hotkey">E</span>dit</div>
+      <div class="npdf-dropdown">
+        <div class="npdf-subitem" id="sub-cleartxt"><span>Bersihkan Teks Editor</span></div>
+        <div class="npdf-subitem" id="sub-clearfiles"><span>Hapus Semua Berkas</span></div>
+      </div>
+    </div>
+
+    <div class="npdf-menu-wrapper" id="menu-tools">
+      <div class="npdf-menu-item"><span class="hotkey">T</span>ools</div>
+      <div class="npdf-dropdown">
+        <div class="npdf-subitem" id="sub-terminal"><span>Command Prompt Mode (CMD)</span> <span>Ctrl+~</span></div>
+        <div class="npdf-divider"></div>
+        <div class="npdf-subitem" data-tool="imgToPdf"><span>Foto ke PDF</span></div>
+        <div class="npdf-subitem" data-tool="pdfToImg"><span>PDF ke Foto (ZIP)</span></div>
+        <div class="npdf-subitem" data-tool="compressPdf"><span>Kompres PDF</span></div>
+        <div class="npdf-subitem" data-tool="protectPdf"><span>Kunci PDF (Password)</span></div>
+        <div class="npdf-subitem" data-tool="unlockPdf"><span>Buka Password PDF</span></div>
+        <div class="npdf-subitem" data-tool="flattenPdf"><span>Flatten PDF (Kunci Isi)</span></div>
+        <div class="npdf-subitem" data-tool="cleanMetadata"><span>Hapus Metadata Sensitif</span></div>
+        <div class="npdf-subitem" data-tool="mergePdf"><span>Gabung PDF</span></div>
+        <div class="npdf-subitem" data-tool="splitPdf"><span>Pisah PDF</span></div>
+        <div class="npdf-subitem" data-tool="deletePages"><span>Hapus Halaman PDF</span></div>
+        <div class="npdf-subitem" data-tool="rotatePdf"><span>Putar PDF</span></div>
+        <div class="npdf-subitem" data-tool="watermarkPdf"><span>Watermark</span></div>
+        <div class="npdf-subitem" data-tool="pageNumbersPdf"><span>Nomor Halaman</span></div>
+        <div class="npdf-subitem" data-tool="organizePdf"><span>Urutkan Halaman</span></div>
+        <div class="npdf-subitem" data-tool="cropPdf"><span>Crop Margins PDF</span></div>
+        <div class="npdf-subitem" data-tool="extractImages"><span>Ekstrak Gambar dari PDF (ZIP)</span></div>
+        <div class="npdf-subitem" data-tool="pdfToTxt"><span>PDF ke Teks</span></div>
+        <div class="npdf-subitem" data-tool="txtToPdf"><span>Teks ke PDF</span></div>
+        <div class="npdf-subitem" data-tool="htmlToPdf"><span>HTML ke PDF</span></div>
+        <div class="npdf-subitem" data-tool="translatePdf"><span>Terjemahkan PDF</span></div>
+      </div>
+    </div>
+
+    <div class="npdf-menu-wrapper" id="menu-options">
+      <div class="npdf-menu-item"><span class="hotkey">O</span>ptions</div>
+      <div class="npdf-dropdown">
+        <div class="npdf-subitem" id="sub-preview"><span>Pratinjau (Preview)</span></div>
+        <div class="npdf-subitem" id="sub-sysinfo"><span>Status Memori DOS</span></div>
+      </div>
+    </div>
+
+    <div class="npdf-menu-wrapper" id="menu-help">
+      <div class="npdf-menu-item"><span class="hotkey">H</span>elp [F1]</div>
+      <div class="npdf-dropdown">
+        <div class="npdf-subitem" id="sub-help"><span>Panduan Penggunaan</span></div>
+        <div class="npdf-subitem" id="sub-about"><span>Tentang N Pdf</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="npdf-viewport">
+    <div class="npdf-main-box">
+      <div class="npdf-title-bar">=== N PDF STUDIO - ENTERPRISE EDITION ===</div>
+      <div class="npdf-box-body">
+
+        <div class="npdf-nav-bar" id="fkey-container">
+          <button class="npdf-nav-btn active" data-mode="imgToPdf">Foto ke PDF</button>
+          <button class="npdf-nav-btn" data-mode="pdfToImg">PDF ke Foto</button>
+          <button class="npdf-nav-btn" data-mode="compressPdf">Kompres PDF</button>
+          <button class="npdf-nav-btn" data-mode="protectPdf">Kunci PDF</button>
+          <button class="npdf-nav-btn" data-mode="unlockPdf">Buka Password</button>
+          <button class="npdf-nav-btn" data-mode="flattenPdf">Flatten PDF</button>
+          <button class="npdf-nav-btn" data-mode="cleanMetadata">Hapus Metadata</button>
+          <button class="npdf-nav-btn" data-mode="mergePdf">Gabung PDF</button>
+          <button class="npdf-nav-btn" data-mode="splitPdf">Pisah PDF</button>
+          <button class="npdf-nav-btn" data-mode="deletePages">Hapus Halaman</button>
+          <button class="npdf-nav-btn" data-mode="rotatePdf">Putar PDF</button>
+          <button class="npdf-nav-btn" data-mode="watermarkPdf">Watermark</button>
+          <button class="npdf-nav-btn" data-mode="pageNumbersPdf">Nomor Halaman</button>
+          <button class="npdf-nav-btn" data-mode="organizePdf">Urut Halaman</button>
+          <button class="npdf-nav-btn" data-mode="cropPdf">Crop Margins</button>
+          <button class="npdf-nav-btn" data-mode="extractImages">Ekstrak Gambar</button>
+          <button class="npdf-nav-btn" data-mode="pdfToTxt">PDF ke Teks</button>
+          <button class="npdf-nav-btn" data-mode="txtToPdf">Teks ke PDF</button>
+          <button class="npdf-nav-btn" data-mode="htmlToPdf">HTML ke PDF</button>
+          <button class="npdf-nav-btn" data-mode="translatePdf">Terjemahkan</button>
+        </div>
+
+        <div class="npdf-view-panel" id="dynamic-container">
+          <div class="npdf-header-card">
+            <h2 id="tool-title">> MODUL: FOTO KE PDF DOKUMEN</h2>
+            <p id="tool-desc">Ubah daftar berkas gambar (JPG, PNG) menjadi dokumen PDF terstruktur.</p>
+          </div>
+
+          <div class="npdf-upload-box" id="dropzone">
+            <input type="file" id="file-input" style="display:none;" multiple>
+            <div class="upload-txt">[ TEKAN SELEKSI ATAU SERET BERKAS KE SINI ]</div>
+            <div style="font-size:16px; color:var(--dos-black); margin-top:4px;" id="dropzone-sub">Mendukung format gambar & PDF standar</div>
+          </div>
+
+          <textarea id="text-editor" class="npdf-editor-input" placeholder="Ketik isi teks/kode HTML di sini..."></textarea>
+
+          <div class="dos-progress-box" id="dos-progress-container">
+            <div class="dos-progress-text">
+              <span id="dos-progress-status">> MEMPROSES DOKUMEN...</span>
+              <span id="dos-progress-percent">0%</span>
+            </div>
+            <div class="dos-progress-bar-line" id="dos-progress-bar-line">[░░░░░░░░░░░░░░░░░░░░]</div>
+          </div>
+
+          <div class="npdf-config-grid" id="options-panel">
+            
+            <div class="npdf-field-group" id="opt-paper-size">
+              <label>UKURAN KERTAS:</label>
+              <div class="npdf-select-custom" id="dd-paper-size">
+                <div class="npdf-select-head"><span class="trigger-label">A4 (210 x 297 mm)</span><span class="trigger-icon">▼</span></div>
+                <div class="npdf-select-list">
+                  <div class="npdf-select-opt selected" data-value="a4">A4 (210 x 297 mm)</div>
+                  <div class="npdf-select-opt" data-value="letter">Letter (8.5 x 11 in)</div>
+                  <div class="npdf-select-opt" data-value="legal">Legal (8.5 x 14 in)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="npdf-field-group" id="opt-orientation">
+              <label>ORIENTASI:</label>
+              <div class="npdf-select-custom" id="dd-orientation">
+                <div class="npdf-select-head"><span class="trigger-label">Potret (Tegak)</span><span class="trigger-icon">▼</span></div>
+                <div class="npdf-select-list">
+                  <div class="npdf-select-opt selected" data-value="p">Potret (Tegak)</div>
+                  <div class="npdf-select-opt" data-value="l">Lanskap (Mendatar)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="npdf-field-group" id="opt-compress-level" style="display:none;">
+              <label>RASIO KOMPRESI:</label>
+              <div class="npdf-select-custom" id="dd-compress-level">
+                <div class="npdf-select-head"><span class="trigger-label">Sedang (50%)</span><span class="trigger-icon">▼</span></div>
+                <div class="npdf-select-list">
+                  <div class="npdf-select-opt" data-value="0.7">Rendah (Kualitas Tinggi)</div>
+                  <div class="npdf-select-opt selected" data-value="0.5">Sedang (50%)</div>
+                  <div class="npdf-select-opt" data-value="0.3">Tinggi (70%)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="npdf-field-group" id="opt-rotate-angle" style="display:none;">
+              <label>SUDUT ROTASI:</label>
+              <div class="npdf-select-custom" id="dd-rotate-angle">
+                <div class="npdf-select-head"><span class="trigger-label">90° (Searah Jarum Jam)</span><span class="trigger-icon">▼</span></div>
+                <div class="npdf-select-list">
+                  <div class="npdf-select-opt selected" data-value="90">90° (Searah Jarum Jam)</div>
+                  <div class="npdf-select-opt" data-value="180">180° (Terbalik)</div>
+                  <div class="npdf-select-opt" data-value="270">270° (Berlawanan)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="npdf-field-group" id="opt-page-pos" style="display:none;">
+              <label>POSISI NOMOR:</label>
+              <div class="npdf-select-custom" id="dd-page-pos">
+                <div class="npdf-select-head"><span class="trigger-label">Bawah Kanan</span><span class="trigger-icon">▼</span></div>
+                <div class="npdf-select-list">
+                  <div class="npdf-select-opt selected" data-value="bottom-right">Bawah Kanan</div>
+                  <div class="npdf-select-opt" data-value="bottom-center">Bawah Tengah</div>
+                  <div class="npdf-select-opt" data-value="bottom-left">Bawah Kiri</div>
+                  <div class="npdf-select-opt" data-value="top-right">Atas Kanan</div>
+                  <div class="npdf-select-opt" data-value="top-center">Atas Tengah</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="npdf-field-group" id="opt-target-lang" style="display:none;">
+              <label>BAHASA TUJUAN:</label>
+              <div class="npdf-select-custom" id="dd-target-lang">
+                <div class="npdf-select-head"><span class="trigger-label">English</span><span class="trigger-icon">▼</span></div>
+                <div class="npdf-select-list">
+                  <div class="npdf-select-opt selected" data-value="en">English</div>
+                  <div class="npdf-select-opt" data-value="id">Bahasa Indonesia</div>
+                  <div class="npdf-select-opt" data-value="zh-CN">Mandarin (Simplified)</div>
+                  <div class="npdf-select-opt" data-value="ja">Jepang (Japanese)</div>
+                  <div class="npdf-select-opt" data-value="ar">Arab (Arabic)</div>
+                  <div class="npdf-select-opt" data-value="es">Español</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="npdf-field-group" id="opt-password" style="display:none;">
+              <label>KATA SANDI:</label>
+              <input type="password" id="input-password" class="npdf-text-field" placeholder="Password PDF">
+            </div>
+            <div class="npdf-field-group" id="opt-page-range" style="display:none;">
+              <label>RENTANG HALAMAN:</label>
+              <input type="text" id="input-range" class="npdf-text-field" placeholder="Misal: 1-3 atau 2,4,6">
+            </div>
+            <div class="npdf-field-group" id="opt-delete-pages" style="display:none;">
+              <label>HALAMAN YANG DIHAPUS:</label>
+              <input type="text" id="input-delete-pages" class="npdf-text-field" placeholder="Misal: 2,5 atau 3-7">
+            </div>
+            <div class="npdf-field-group" id="opt-page-order" style="display:none;">
+              <label>URUTAN HALAMAN:</label>
+              <input type="text" id="input-page-order" class="npdf-text-field" placeholder="Misal: 3,1,2">
+            </div>
+            <div class="npdf-field-group" id="opt-watermark-text" style="display:none;">
+              <label>TEKS WATERMARK:</label>
+              <input type="text" id="input-watermark" class="npdf-text-field" placeholder="N PDF DOKUMEN">
+            </div>
+            <div class="npdf-field-group" id="opt-crop-margin" style="display:none;">
+              <label>MARGIN CROP (PIXEL):</label>
+              <input type="number" id="input-crop-margin" class="npdf-text-field" value="20" placeholder="20">
+            </div>
+
+          </div>
+
+          <div id="file-list-container" style="display:none;">
+            <div style="color:var(--dos-black); font-weight:bold; font-size:18px; margin-bottom:4px; display:flex; justify-content:space-between;">
+              <span>BERKAS TERPILIH (GESER TANDA ☰ UNTUK ATUR URUTAN):</span>
+            </div>
+            <div id="file-list" class="npdf-files-wrapper"></div>
+          </div>
+
+        </div>
+
+        <div class="npdf-footer-actions">
+          <button id="preview-btn" class="npdf-btn-action" style="display:none;">[ PREVIEW ]</button>
+          <button id="process-btn" class="npdf-btn-action" disabled>[ EKSEKUSI PROSES ]</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="npdf-bottom-bar">
+    <div id="status-text">STATUS: READY</div>
+    <div>DRIVE C:\N_PDF\></div>
+    <div>MEMORY: 640KB OK</div>
+  </div>
+
+  <div class="npdf-modal-mask" id="preview-modal">
+    <div class="npdf-modal-content">
+      <div class="npdf-title-bar" id="modal-title">=== HASIL PRATINJAU DOKUMEN ===</div>
+      <div class="npdf-modal-view" id="modal-body">
+        <canvas id="pdf-preview-canvas"></canvas>
+      </div>
+      <div style="display:flex; justify-content:flex-end;" id="modal-footer">
+        <button class="npdf-btn-action" id="close-modal-btn">[ TUTUP (ESC) ]</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- External Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
