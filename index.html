@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>N PDF Studio (1984) - Enterprise Edition</title>
+  <meta name="description" content="Konversi, kompresi, enkripsi PDF gratis - 20+ tools offline. Tidak perlu upload ke server.">
+  <meta name="keywords" content="PDF converter, PDF merge, PDF compress, PDF editor, PDF tools">
+  <meta property="og:title" content="N PDF Studio - PDF Converter All-in-One">
+  <meta property="og:description" content="20+ tools untuk manipulasi PDF - semuanya berjalan di browser Anda">
 
   <!-- PWA Manifest Integration -->
-  <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIk4gUERGIFN0dWRpbyIsCiAgInNob3J0X25hbWUiIjogIk5QREYiLAogICJzdGFydF91cmwiOiAiLi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiM1Y2UwZDgiLAogICJ0aGVtZV9jb2xvciI6ICIjMDUwYTBlIgp9">
+  <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIk4gUERGIFN0dWRpbyIsCiAgInNob3J0X25hbWUiOiAiTlBERiIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgInNjb3BlIjogIi4vIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTkyIDE5Mic+PXJlY3Qgd2lkdGg9JzE5MicgaGVpZ2h0PScxOTInIGZpbGw9JyM1Y2UwZDgnLz48L3N2Zz4iLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXSwKICAidGhlbWVfY29sb3IiOiAiIzA1MGEwZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzVjZTBkOCIKfQ==">
 
   <!-- Core Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -15,7 +19,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
@@ -29,26 +33,24 @@
     <div class="npdf-menu-wrapper" id="menu-file">
       <div class="npdf-menu-item"><span class="hotkey">F</span>ile</div>
       <div class="npdf-dropdown">
-        <div class="npdf-subitem" id="sub-buka"><span>Buka Berkas...</span> <span>Ctrl+O</span></div>
-        <div class="npdf-subitem" id="sub-reset"><span>Reset Berkas</span> <span>Ctrl+R</span></div>
+        <div class="npdf-subitem" onclick="window.app?.fileInput?.click?.()" style="cursor:pointer;"><span>Buka Berkas...</span> <span>Ctrl+O</span></div>
+        <div class="npdf-subitem" onclick="window.app?.resetFiles?.()" style="cursor:pointer;"><span>Reset Berkas</span> <span>Ctrl+R</span></div>
         <div class="npdf-divider"></div>
-        <div class="npdf-subitem" id="sub-eksekusi"><span>Eksekusi Proses</span> <span>Enter</span></div>
+        <div class="npdf-subitem" onclick="window.app?.processBtn?.click?.()" style="cursor:pointer;"><span>Eksekusi Proses</span> <span>Enter</span></div>
       </div>
     </div>
 
     <div class="npdf-menu-wrapper" id="menu-edit">
       <div class="npdf-menu-item"><span class="hotkey">E</span>dit</div>
       <div class="npdf-dropdown">
-        <div class="npdf-subitem" id="sub-cleartxt"><span>Bersihkan Teks Editor</span></div>
-        <div class="npdf-subitem" id="sub-clearfiles"><span>Hapus Semua Berkas</span></div>
+        <div class="npdf-subitem" onclick="window.app?.textEditor?.setVolume?.(0)" style="cursor:pointer;"><span>Bersihkan Teks Editor</span></div>
+        <div class="npdf-subitem" onclick="window.app?.loadedFiles?.splice?.(0)" style="cursor:pointer;"><span>Hapus Semua Berkas</span></div>
       </div>
     </div>
 
     <div class="npdf-menu-wrapper" id="menu-tools">
       <div class="npdf-menu-item"><span class="hotkey">T</span>ools</div>
       <div class="npdf-dropdown">
-        <div class="npdf-subitem" id="sub-terminal"><span>Command Prompt Mode (CMD)</span> <span>Ctrl+~</span></div>
-        <div class="npdf-divider"></div>
         <div class="npdf-subitem" data-tool="imgToPdf"><span>Foto ke PDF</span></div>
         <div class="npdf-subitem" data-tool="pdfToImg"><span>PDF ke Foto (ZIP)</span></div>
         <div class="npdf-subitem" data-tool="compressPdf"><span>Kompres PDF</span></div>
@@ -72,19 +74,11 @@
       </div>
     </div>
 
-    <div class="npdf-menu-wrapper" id="menu-options">
-      <div class="npdf-menu-item"><span class="hotkey">O</span>ptions</div>
-      <div class="npdf-dropdown">
-        <div class="npdf-subitem" id="sub-preview"><span>Pratinjau (Preview)</span></div>
-        <div class="npdf-subitem" id="sub-sysinfo"><span>Status Memori DOS</span></div>
-      </div>
-    </div>
-
     <div class="npdf-menu-wrapper" id="menu-help">
-      <div class="npdf-menu-item"><span class="hotkey">H</span>elp [F1]</div>
+      <div class="npdf-menu-item"><span class="hotkey">H</span>elp</div>
       <div class="npdf-dropdown">
-        <div class="npdf-subitem" id="sub-help"><span>Panduan Penggunaan</span></div>
-        <div class="npdf-subitem" id="sub-about"><span>Tentang N Pdf</span></div>
+        <div class="npdf-subitem" style="cursor:pointer;"><span>Panduan Penggunaan</span></div>
+        <div class="npdf-subitem" style="cursor:pointer;"><span>Tentang N PDF</span></div>
       </div>
     </div>
   </div>
@@ -280,7 +274,7 @@
     </div>
   </div>
 
-  <!-- External Application Logic -->
-  <script src="app.js"></script>
+  <!-- Refactored Application Logic using ES6 modules -->
+  <script type="module" src="src/app.js"></script>
 </body>
 </html>
